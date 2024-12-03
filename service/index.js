@@ -2,13 +2,14 @@
 const express = require("express");
 const cors = require('cors')
 const config = require("./config");
+const db = require("./db/service");
 const bodyParser = require('body-parser')
 const https = require('https')
 const fs = require('fs')
 
 const httpsOptions = {
-  key: fs.readFileSync('./privatekey.pem'),
-  cert: fs.readFileSync('./publiccert.pem')
+  // key: fs.readFileSync('./privatekey.pem'),
+  // cert: fs.readFileSync('./publiccert.pem')
 }
 
 const app = express();
@@ -28,3 +29,5 @@ app.get(root+config.app.route_receive, (req, res) => {
 })
 
 const server = https.createServer(httpsOptions, app).listen(config.app.port, () => {console.log('listening on port:', server.address().port)})
+
+db.doThings;
