@@ -1,22 +1,25 @@
-const sqlite3 = require('sqlite3');
-const {open} = require('sqlite');
+const sqlite3 = require('sqlite3').verbose();
 
 async function openDB(dbName) {
-  return open({
-    filename : ':memory:', // TODO in memory db for dev. to properly store data use a file
-    driver : sqlite3.Database
-  });
+  return new sqlite3.Database('sqlite.db');
 }
 
-module.exports.doThings = (async () => {
+module.exports.DBsetup = async() => {
   const db = await openDB();
-  await db.exec('create table tbl_test (id INTEGER PRIMARY KEY, data TEXT)');
-  await db.exec('insert into tbl_test (data) values ("test insert")');
-  const result = await db.get('select * from tbl_test');
-  console.log(result);
-})();
+  await db.run('create table if not exists tbl_log (id INTEGER PRIMARY KEY, timestamp INTEGER, message TEXT)');
+  return db;
+}
 
-
-// module.exports = async function readDB() {
-//   return await db.get('select * from tbl_test');
-// }
+/**
+ * 
+ * @param {Database} db 
+ * @param {string} message 
+ */
+module.exports.DBwrite = async(db, message) => {
+  var statement = db.prepare('insert into tbl_log (timestamp, message) values (?, ?)');
+  statement.run(123, message);
+  statement.finalize();
+  db.each('select * from tbl_log', (err, row) => {
+    console.log(row.id, row.message);
+  });
+}

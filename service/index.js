@@ -30,4 +30,9 @@ app.get(root+config.app.route_receive, (req, res) => {
 
 const server = https.createServer(httpsOptions, app).listen(config.app.port, () => {console.log('listening on port:', server.address().port)})
 
-db.doThings;
+async function doSth() {
+  const database = await db.DBsetup();
+  db.DBwrite(database, "test message");
+}
+
+doSth();
