@@ -137,15 +137,13 @@ describe('MFF Algorithm', () => {
     mff.i = 1; // simulate to be on last step
 
     jest.spyOn(mff, 'step2').mockImplementation(() => {});
-    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(mff, 'outputCurrentPath').mockImplementation(() => {});
 
     mff.step5();
 
     expect(mff.step2).toHaveBeenCalledTimes(0);
-    expect(console.log).toHaveBeenCalledTimes(1);
+    expect(mff.outputCurrentPath).toHaveBeenCalledTimes(1);
     expect(mff.i).toBe(2);
-
-    jest.restoreAllMocks(); // cleanup to reset console state
   });
 });
 
@@ -158,5 +156,46 @@ describe('MFF utils', () => {
 
     expect(console.log).toHaveBeenCalledTimes(1);
     jest.restoreAllMocks(); // cleanup to reset console state
+  });
+});
+
+describe('MFF run', () => {
+  it('should correctly path along the steps from the paper', () => {
+    let steps = [
+      new Step('A'),
+      new Step('B', 'A'),
+      new Step('C', 'B'),
+      new Step('D', 'C'),
+      new Step('C', 'D'),
+      new Step('B', 'C'),
+      new Step('E', 'B'),
+      new Step('G', 'E'),
+      new Step('H', 'G'),
+      new Step('G', 'H'),
+      new Step('W', 'G'),
+      new Step('A'),
+      new Step('O', 'A'),
+      new Step('U', 'O'),
+      new Step('O', 'U'),
+      new Step('V', 'O'),
+    ];
+    const mff = new MFF(steps);
+
+    const result :string[] = [];
+    jest.spyOn(mff, 'outputCurrentPath').mockImplementation(() => {
+      result.push(mff.Y);
+    });
+
+    mff.run();
+    
+    // console.log(result);
+    expect(result.length).toBe(6);
+
+    expect(result[0]).toBe(''); // should be filtered out by actual implementation of outputCurrentPath
+    expect(result[1]).toBe('ABCD');
+    expect(result[2]).toBe('ABEGH');
+    expect(result[3]).toBe('ABEGW');
+    expect(result[4]).toBe('AOU');
+    expect(result[5]).toBe('AOV');
   });
 });

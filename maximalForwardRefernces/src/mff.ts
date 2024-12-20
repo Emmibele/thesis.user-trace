@@ -62,7 +62,7 @@ export class MFF {
     }
 
     if(BIndexInY >= 1 ){
-      this.outputCurrentPath();
+      if (this.F == 1) {this.outputCurrentPath();}
       BIndexInY = BIndexInY == this.Y.length? BIndexInY : BIndexInY + 1;
       this.Y = this.Y.slice(0, BIndexInY);
       this.F = 0;
@@ -91,8 +91,10 @@ export class MFF {
     this.i++;
     if(this.i < this.input.length){
       this.step2();
+    } else{
+      this.outputCurrentPath();
+      console.log("MFF completed");
     }
-    console.log("MFF completed");
   }
 
   outputCurrentPath(){
