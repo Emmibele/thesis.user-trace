@@ -198,4 +198,28 @@ describe('MFF run', () => {
     expect(result[4]).toBe('AOU');
     expect(result[5]).toBe('AOV');
   });
+  it('just a test', () => {
+    let steps = [
+      new Step('A'),
+      new Step('B', 'A'),
+      new Step('C', 'B'),
+      new Step('D', 'C'),
+      new Step('C', 'D'),
+      new Step('D', 'C'),
+      new Step('C', 'D'),
+      new Step('E', 'C'),
+      new Step('C', 'E'),
+      new Step('A'),
+    ];
+
+    const mff = new MFF(steps);
+
+    const result :string[] = [];
+    jest.spyOn(mff, 'outputCurrentPath').mockImplementation(() => {
+      result.push(mff.Y);
+    });
+
+    mff.run();
+    console.log(result);
+  });
 });
