@@ -13,6 +13,10 @@ export class MFF2 {
     this.input = input;
   }
 
+  run(){
+    this.newPath();
+  }
+
   /**
    * step 2 in the original algorithm
    */
