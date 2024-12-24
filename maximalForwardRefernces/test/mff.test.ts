@@ -222,4 +222,35 @@ describe('MFF run', () => {
     mff.run();
     console.log(result);
   });
+  it('test realIsh situation', () => {
+    let steps = [
+      new Step('A'), // origin
+      new Step('B', 'A'), // click create
+      new Step('C', 'B'), // dialog ok
+      new Step('D', 'C'), // dialog enter time
+      new Step('C', 'D'), // dialog ok
+      new Step('D', 'C'), // dialog enter time
+      new Step('E', 'D'), // dialog not ok
+      new Step('D', 'E'), // dialog enter time
+      new Step('C', 'D'), // dialog ok
+      new Step('F', 'C'), // dialog confirm
+      new Step('A', 'F'), // origin
+
+    ];
+    const mff = new MFF(steps);
+
+    const result :string[] = [];
+    jest.spyOn(mff, 'outputCurrentPath').mockImplementation(() => {
+      result.push(mff.Y);
+    });
+
+    mff.run();
+    console.log(result);
+    // [ '', 'ABCD', 'ABCDE', 'ABCFA' ]
+    // always pathing to the furthest viable state / action achievable in a single straight line 
+    // should lead to singular features
+
+
+  });
+
 });
