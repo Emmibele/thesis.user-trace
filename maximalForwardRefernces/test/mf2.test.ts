@@ -1,7 +1,7 @@
 import { Step2, nodeType } from "../src/step2";
-import {MFF2} from '../src/mff2';
+import {MF2} from '../src/mf2';
 
-describe('MFF variant two', () => {
+describe('MF variant two', () => {
   it('should run alg', () => {
     const steps = [
       new Step2(nodeType.origin, 'origin'),
@@ -15,15 +15,15 @@ describe('MFF variant two', () => {
       new Step2(nodeType.state, 'dialog ok'),
       new Step2(nodeType.origin, 'origin'),
     ];
-    const mff = new MFF2(steps);
+    const mf = new MF2(steps);
     
     const paths : Step2[] = [];
 
-    jest.spyOn(mff, 'outputCurrentPath').mockImplementation(() => {
-      paths.push(...mff.Y);
+    jest.spyOn(mf, 'outputCurrentPath').mockImplementation(() => {
+      paths.push(...mf.Y);
     });    
     
-    mff.run();
+    mf.run();
 
     console.log(paths);
   })

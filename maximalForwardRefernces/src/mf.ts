@@ -1,9 +1,9 @@
 import { Step } from "./step";
 
 /**
- * MFF class only working with simple strings rn
+ * MF class only working with simple strings rn
  */
-export class MFF {
+export class MF {
   F: number;
   i: number;
   Y: string;
@@ -13,8 +13,8 @@ export class MFF {
   B?: string;
 
   /**
-   * Acts as step 1 of the MFF algorithm
-   * @param {string} input all steps for MFF to process
+   * Acts as step 1 of the MF algorithm
+   * @param {string} input all steps for MF to process
    */
   constructor(input: Step[]){
     this.F = 1;
@@ -24,14 +24,14 @@ export class MFF {
   }
 
   /**
-   * Run the MFF algorithm
+   * Run the MF algorithm
   */
   run(){
     this.step2();
   }
 
   /**
-   * Step 2 of the MFF algorithm: Beginning a new traversal / Finished a path and starting from root
+   * Step 2 of the MF algorithm: Beginning a new traversal / Finished a path and starting from root
   */
   step2(){
     this.A = this.input[this.i].source;
@@ -50,7 +50,7 @@ export class MFF {
   }
  
   /**
-   * Step 3 of the MFF algorithm: Backtracking
+   * Step 3 of the MF algorithm: Backtracking
    */
   step3(){
     let BIndexInY;
@@ -76,7 +76,7 @@ export class MFF {
   }
 
   /**
-   * Step 4 of the MFF algorithm: Forward traversal
+   * Step 4 of the MF algorithm: Forward traversal
    */ 
   step4(){
     this.Y = this.Y + this.B;
@@ -85,7 +85,7 @@ export class MFF {
   }
 
   /**
-   * Step 5 of the MFF algorithm: Continue algorithm
+   * Step 5 of the MF algorithm: Continue algorithm
    */
   step5(){
     this.i++;
@@ -93,7 +93,7 @@ export class MFF {
       this.step2();
     } else{
       this.outputCurrentPath();
-      console.log("MFF completed");
+      console.log("MF completed");
     }
   }
 

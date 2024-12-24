@@ -5,10 +5,9 @@ import { Step2, nodeType } from "./step2";
 // - only reset on origin node
 // - filter out loops (could maybe also be done after traversal -> are loops even a problem? probs depends on final implementation)
 
-export class MFF2 {
+export class MF2 {
   F: boolean = true;
   i: number = 0;
-
 
   Y : Step2[] = [];
   input: Step2[];
@@ -76,7 +75,7 @@ export class MFF2 {
     }
     else{
       this.outputCurrentPath();
-      console.log("MFF completed");
+      console.log("MF completed");
     }
   }
 
