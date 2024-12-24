@@ -245,7 +245,7 @@ describe('MF run', () => {
     });
 
     mf.run();
-    console.log(result);
+    // console.log(result);
     // [ '', 'ABCD', 'ABCDE', 'ABCFA' ]
     // always pathing to the furthest viable state / action achievable in a single straight line 
     // should lead to singular features

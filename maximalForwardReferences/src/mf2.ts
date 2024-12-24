@@ -2,7 +2,7 @@ import { Step2, nodeType } from "./step2";
 
 
 // TODO: changes
-// - only reset on origin node
+// - only reset on origin node -> maybe as an option -> currently acts like the original algorithm
 // - filter out loops (could maybe also be done after traversal -> are loops even a problem? probs depends on final implementation)
 
 export class MF2 {
