@@ -61,21 +61,4 @@ function getIndex(node: HTMLElement): number {
   return i;
 }
 
-// load document
-// document.addEventListener("DOMContentLoaded", () => {
-//   // click on element to get output
-//   document.body.addEventListener("click", (e) => {
-//     let selector = document.querySelector(".selector");
-//     // selector output
-//     let output = generateSelector(e.target);
-
-//     selector.innerHTML = `<strong>Selector:</strong> ${output}`;
-
-//     // element that you select
-//     let element = document.querySelector(output);
-//     console.log(output);
-//     console.log("Element:", element);
-//   });
-// });
-
 // https://dev.to/aniket_chauhan/generate-a-css-selector-path-of-a-dom-element-4aim
