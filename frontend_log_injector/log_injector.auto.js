@@ -15,3 +15,4 @@ async function post_log() {
   const response = await fetch(request);
   console.log(response.status)
 }
+// TODO typscriptify

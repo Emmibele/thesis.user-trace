@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "sourceMap": true
+  },
+  "include": ["src/**/*", "log_injector.auto.js", "log_injector_config.auto.js", "css_selector_2.auto.js", "css_selector.auto.js"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
