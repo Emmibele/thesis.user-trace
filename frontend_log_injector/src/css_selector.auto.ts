@@ -1,4 +1,9 @@
-function generateSelector(context: HTMLElement): string {
+/**
+ * generates a CSS selector for a given element
+ * @param context the element for which the selector should be generated
+ * @returns CSS selector for the given element
+ */
+export function generateSelector(context: HTMLElement): string {
   let index, pathSelector;
 
   // call getIndex function
