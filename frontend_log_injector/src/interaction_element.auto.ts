@@ -2,6 +2,9 @@
 import { generateSelector } from "./css_selector.auto";
 //#endregion
 
+/**
+ * Contains all information to be able to figure out user interaction behavior
+ */
 class InteractionElement{
   /**
    * The element that the user interacts with
@@ -42,7 +45,7 @@ abstract class InteractionElementType{
   static getElements(): InteractionElement[] {throw new Error("Not implemented, use this method in a derived class");};
 }
 
-export class InteractionButton extends InteractionElementType{
+export class InteractionTypeButton extends InteractionElementType{
   static getElements(): InteractionElement[]{
     return Array.from(document.querySelectorAll("button")).map((element) => {
       const descriptiveName = this.getElementName(element);

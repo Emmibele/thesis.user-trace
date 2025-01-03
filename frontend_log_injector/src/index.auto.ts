@@ -1,7 +1,7 @@
-import {InteractionButton} from "./interaction_element.auto"
+import {InteractionTypeButton} from "./interaction_element.auto"
 
 function addToBtn(){
-  InteractionButton.getElements().forEach((element) => {
+  InteractionTypeButton.getElements().forEach((element) => {
     element.interactiveElement.addEventListener("click", () => {
       console.log(`${element.descriptiveName} clicked`);
     });
