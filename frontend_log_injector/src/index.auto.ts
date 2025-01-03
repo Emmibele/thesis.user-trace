@@ -1,12 +1,17 @@
-import {InteractionTypeButton} from "./interaction_element.auto"
+import {InteractionTypeButton, InteractionTypeComment} from "./interaction_element.auto"
 
-function addToBtn(){
+function initLogger(){
   InteractionTypeButton.getElements().forEach((element) => {
     InteractionTypeButton.attachLogger(element)
   });
+
+  InteractionTypeComment.getElements().forEach(element => {
+    InteractionTypeComment.attachLogger(element)
+  });
+
 }
 
 
 window.addEventListener('load', () => {
-  addToBtn();
+  initLogger();
 })
