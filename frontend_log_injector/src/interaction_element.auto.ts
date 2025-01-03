@@ -45,9 +45,29 @@ abstract class InteractionElementType{
 export class InteractionButton extends InteractionElementType{
   static getElements(): InteractionElement[]{
     return Array.from(document.querySelectorAll("button")).map((element) => {
-      // TODO: need to to something about buttons without inner text (create, edit,...)
-      const descriptiveName = element.innerText.length > 0? element.innerText : "Button";
+      const descriptiveName = this.getElementName(element);
       return new InteractionElement(element, descriptiveName);
     });
+  }
+
+  /**
+   * Returns a descriptive name of the provided button. 
+   * Searches innerText and the related p-tooltip element.
+   * Returns 'Button (unspecified)' if nothing else is found. 
+   * @param button the button to get the descriptive name for
+   * @returns descriptive name of the button
+   */
+  private static getElementName(button: HTMLButtonElement) : string {
+    if (button.innerText.length > 0)
+      return button.innerText.replace(/\n/g,''); // remove all newlines before returning
+
+    const toolTipElement = button.nextElementSibling;
+    if (toolTipElement && 
+        toolTipElement instanceof HTMLDivElement && 
+        toolTipElement.classList.contains('p-tooltip') &&
+        toolTipElement.textContent)
+      return toolTipElement.textContent
+    
+    return "Button (unspecified)"
   }
 }
