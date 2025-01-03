@@ -26,11 +26,11 @@ class InteractionElement{
    */
   stateReference?: object;
 
-  constructor(interactiveElement: HTMLElement, descriptiveName: string, id: string, dataElement?: HTMLElement){
+  constructor(interactiveElement: HTMLElement, descriptiveName: string, dataElement?: HTMLElement){
     this.interactiveElement = interactiveElement;
     this.descriptiveName = descriptiveName;
-    this.id = id;
     this.dataElement = dataElement;
+    this.id = generateSelector(interactiveElement);
   }
 }
 
@@ -39,15 +39,14 @@ abstract class InteractionElementType{
   /**
    * Get all elements of this type
    */
-  abstract getElements(): InteractionElement[];
+  static getElements(): InteractionElement[] {throw new Error("Not implemented, use this method in a derived class");};
 }
 
-class InteractionButton extends InteractionElementType{
-  getElements(): InteractionElement[]{
+export class InteractionButton extends InteractionElementType{
+  static getElements(): InteractionElement[]{
     return Array.from(document.querySelectorAll("button")).map((element) => {
       const descriptiveName = element.textContent || "Button";
-      const id = generateSelector(element);
-      return new InteractionElement(element, descriptiveName, id);
+      return new InteractionElement(element, descriptiveName);
     });
   }
 }
