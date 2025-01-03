@@ -43,6 +43,11 @@ abstract class InteractionElementType{
    * Get all elements of this type
    */
   static getElements(): InteractionElement[] {throw new Error("Not implemented, use this method in a derived class");};
+  /**
+   * attach the logger function to the element being interacted with
+   * //TODO need to figure in what way to pass the actual function
+   */
+  static attachLogger(interaction_element : InteractionElement): void{throw new Error("Not implemented, use this method in a derived class");};
 }
 
 export class InteractionTypeButton extends InteractionElementType{
@@ -50,6 +55,12 @@ export class InteractionTypeButton extends InteractionElementType{
     return Array.from(document.querySelectorAll("button")).map((element) => {
       const descriptiveName = this.getElementName(element);
       return new InteractionElement(element, descriptiveName);
+    });
+  }
+
+  static attachLogger(interaction_element : InteractionElement): void {
+    interaction_element.interactiveElement.addEventListener("click", () => {
+      console.log(`${interaction_element.descriptiveName} clicked`);
     });
   }
 
