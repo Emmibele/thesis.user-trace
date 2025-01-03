@@ -6,7 +6,6 @@
 export function generateSelector(context: HTMLElement): string {
   let index, pathSelector;
 
-  // call getIndex function
   index = getIndex(context);
 
   let element: HTMLElement | null = context;
@@ -46,7 +45,9 @@ function getClassNameString(classList: DOMTokenList): string {
   return className;
 }
 
-// get index for nth of type element
+/**
+ *  get index for nth of type element 
+ */
 function getIndex(node: HTMLElement): number {
   let i = 1;
   let tagName = node.tagName;
