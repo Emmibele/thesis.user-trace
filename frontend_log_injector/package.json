@@ -2,7 +2,7 @@
   "name": "thesis-usertrace-log-injection",
   "version": "0.0.1",
   "scripts": {
-    "build": "tsc",
+    "build": "webpack",
     "start": "node dist/index.js",
     "test": "jest"
   },
@@ -10,6 +10,9 @@
     "@types/jest": "^29.5.14",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5",
-    "typescript": "^5.7.2"
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
   }
 }
