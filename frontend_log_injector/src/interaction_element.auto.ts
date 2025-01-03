@@ -45,7 +45,8 @@ abstract class InteractionElementType{
 export class InteractionButton extends InteractionElementType{
   static getElements(): InteractionElement[]{
     return Array.from(document.querySelectorAll("button")).map((element) => {
-      const descriptiveName = element.textContent || "Button";
+      // TODO: need to to something about buttons without inner text (create, edit,...)
+      const descriptiveName = element.innerText.length > 0? element.innerText : "Button";
       return new InteractionElement(element, descriptiveName);
     });
   }

@@ -22,3 +22,7 @@ utility scripts to track user interactions and send them to a backend
 
 ## catch inputs
 [catch changes made from js](https://stackoverflow.com/questions/26946235/pure-javascript-listen-to-input-value-change/62235852#62235852)
+
+## to think about
+- [ ] filterbar
+- [ ] additional btns: excel, print, ...
