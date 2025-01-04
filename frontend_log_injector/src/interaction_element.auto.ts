@@ -38,27 +38,35 @@ class InteractionElement {
 }
 
 
-abstract class InteractionElementType {
+export abstract class InteractionElementType{
+  interactionElements: InteractionElement[];
+  
+  constructor(){
+    this.interactionElements = this.getElements();
+    this.interactionElements.forEach(element => this.attachLogger(element))
+  }
+
   /**
-   * Get all elements of this type
+   * get all elements of this type
    */
-  static getElements(): InteractionElement[] { throw new Error("Not implemented, use this method in a derived class"); };
+  abstract getElements(): InteractionElement[];
+
   /**
    * attach the logger function to the element being interacted with
    * //TODO need to figure in what way to pass the actual function
    */
-  static attachLogger(interaction_element: InteractionElement): void { throw new Error("Not implemented, use this method in a derived class"); };
+  abstract attachLogger(interaction_element: InteractionElement): void;
 }
 
 export class InteractionTypeButton extends InteractionElementType {
-  static getElements(): InteractionElement[] {
+  getElements(): InteractionElement[] {
     return Array.from(document.querySelectorAll("button")).map((element) => {
       const descriptiveName = this.getElementName(element);
       return new InteractionElement(element, descriptiveName);
     });
   }
 
-  static attachLogger(interaction_element: InteractionElement): void {
+  attachLogger(interaction_element: InteractionElement): void {
     interaction_element.interactiveElement.addEventListener("click", () => {
       console.log(`${interaction_element.descriptiveName} clicked`);
     });
@@ -71,7 +79,7 @@ export class InteractionTypeButton extends InteractionElementType {
    * @param button the button to get the descriptive name for
    * @returns descriptive name of the button
    */
-  private static getElementName(button: HTMLButtonElement): string {
+  private getElementName(button: HTMLButtonElement): string {
     if (button.innerText.length > 0)
       return button.innerText.replace(/\n/g, ''); // remove all newlines before returning
 
@@ -87,7 +95,7 @@ export class InteractionTypeButton extends InteractionElementType {
 }
 
 export class InteractionTypeComment extends InteractionElementType {
-  static getElements(): InteractionElement[] {
+  getElements(): InteractionElement[] {
     return Array.from(document.querySelectorAll("textarea"))
       .filter((element) => element.classList.contains("p-textfield")) // cannot directly use in query selector, because TS then gets confused about the Type of the Element
       .map((element) => {
@@ -96,7 +104,7 @@ export class InteractionTypeComment extends InteractionElementType {
       });
   }
 
-  static attachLogger(interaction_element: InteractionElement): void {
+  attachLogger(interaction_element: InteractionElement): void {
     // TODO logging on every keystroke is somewhat excessive
       interaction_element.interactiveElement.addEventListener('input', () => {
         console.log(`${interaction_element.descriptiveName} input ${interaction_element.data!()}`)

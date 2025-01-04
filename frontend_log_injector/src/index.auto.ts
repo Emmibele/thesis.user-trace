@@ -1,17 +1,12 @@
-import {InteractionTypeButton, InteractionTypeComment} from "./interaction_element.auto"
+import {InteractionElementType, InteractionTypeButton, InteractionTypeComment} from "./interaction_element.auto"
 
-function initLogger(){
-  InteractionTypeButton.getElements().forEach((element) => {
-    InteractionTypeButton.attachLogger(element)
-  });
-
-  InteractionTypeComment.getElements().forEach(element => {
-    InteractionTypeComment.attachLogger(element)
-  });
-
+function registerLoggers(){
+  let interactionElementTypes : InteractionElementType[] = [];
+  interactionElementTypes.push(new InteractionTypeButton());
+  interactionElementTypes.push(new InteractionTypeComment());
 }
 
 
 window.addEventListener('load', () => {
-  initLogger();
+  registerLoggers();
 })
