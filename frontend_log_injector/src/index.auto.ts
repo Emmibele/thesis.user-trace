@@ -1,4 +1,4 @@
-import {InteractionElementType, InteractionTypeButton, InteractionTypeComment} from "./interaction_element.auto"
+import { InteractionElementType, InteractionTypeButton, InteractionTypeComment } from "./InteractionElementType";
 
 function registerLoggers(){
   let interactionElementTypes : InteractionElementType[] = [];

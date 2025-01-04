@@ -1,49 +1,11 @@
-//#region imports
-import { generateSelector } from "./css_selector.auto";
-//#endregion
+import { InteractionElement } from "./InteractionElement";
 
-/**
- * Contains all information to be able to figure out user interaction behavior
- */
-class InteractionElement {
-  /**
-   * The element that the user interacts with
-   */
-  interactiveElement: HTMLElement;
-
-  descriptiveName: string;
-
-  /**
-   * The id of the element, most likely a unique selector
-   */
-  id: string;
-
-  /**
-   * TODO 
-   */
-  data?: () => string;
-
-  //TODO: stateReference
-  /**
-   * a way how state of the dialog can be queried after the interaction 
-   */
-  stateReference?: object;
-
-  constructor(interactiveElement: HTMLElement, descriptiveName: string, data?: () => string) {
-    this.interactiveElement = interactiveElement;
-    this.descriptiveName = descriptiveName;
-    this.data = data;
-    this.id = generateSelector(interactiveElement);
-  }
-}
-
-
-export abstract class InteractionElementType{
+export abstract class InteractionElementType {
   interactionElements: InteractionElement[];
-  
-  constructor(){
+
+  constructor() {
     this.interactionElements = this.getElements();
-    this.interactionElements.forEach(element => this.attachLogger(element))
+    this.interactionElements.forEach(element => this.attachLogger(element));
   }
 
   /**
@@ -73,9 +35,9 @@ export class InteractionTypeButton extends InteractionElementType {
   }
 
   /**
-   * Returns a descriptive name of the provided button. 
+   * Returns a descriptive name of the provided button.
    * Searches innerText and the related p-tooltip element.
-   * Returns 'Button (unspecified)' if nothing else is found. 
+   * Returns 'Button (unspecified)' if nothing else is found.
    * @param button the button to get the descriptive name for
    * @returns descriptive name of the button
    */
@@ -88,9 +50,9 @@ export class InteractionTypeButton extends InteractionElementType {
       toolTipElement instanceof HTMLDivElement &&
       toolTipElement.classList.contains('p-tooltip') &&
       toolTipElement.textContent)
-      return toolTipElement.textContent
+      return toolTipElement.textContent;
 
-    return "Button (unspecified)"
+    return "Button (unspecified)";
   }
 }
 
@@ -106,8 +68,8 @@ export class InteractionTypeComment extends InteractionElementType {
 
   attachLogger(interaction_element: InteractionElement): void {
     // TODO logging on every keystroke is somewhat excessive
-      interaction_element.interactiveElement.addEventListener('input', () => {
-        console.log(`${interaction_element.descriptiveName} input ${interaction_element.data!()}`)
-      })
+    interaction_element.interactiveElement.addEventListener('input', () => {
+      console.log(`${interaction_element.descriptiveName} input ${interaction_element.data!()}`);
+    });
   }
 }
