@@ -40,7 +40,10 @@ export function generateSelector(context: HTMLElement): string {
 function getClassNameString(classList: DOMTokenList): string {
   let className = "";
   for (let i = 0; i < classList.length; i++) {
-    className += `.${classList[i]}`;
+    // some classes start with # ...
+    // TODO is there a way to do escaping in CSS?
+    if(classList[i][0] !== '#') 
+      className += `.${classList[i]}`;
   }
   return className;
 }
