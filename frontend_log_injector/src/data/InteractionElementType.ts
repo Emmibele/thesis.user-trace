@@ -20,22 +20,27 @@ export abstract class InteractionElementType {
 
   /**
    * attach the logger function to the element being interacted with
-   * //TODO need to figure in what way to pass the actual function
    */
   abstract attachLogger(interaction_element: InteractionElement): void;
+
+  get className(): string{
+    return this.constructor.name;
+  }
 }
 
 export class InteractionTypeButton extends InteractionElementType {
+  //TODO: must also work with submit buttons (in this case form submit)
   getElements(): InteractionElement[] {
     return Array.from(document.querySelectorAll("button")).map((element) => {
       const descriptiveName = this.getElementName(element);
-      return new InteractionElement(element, descriptiveName);
+      return new InteractionElement(element, descriptiveName, this.className);
     });
   }
 
   attachLogger(interaction_element: InteractionElement): void {
     interaction_element.interactiveElement.addEventListener("click", () => {
       console.log(`${interaction_element.descriptiveName} clicked`);
+      this.logFunction(new logData(interaction_element));
     });
   }
 
@@ -67,12 +72,12 @@ export class InteractionTypeComment extends InteractionElementType {
       .filter((element) => element.classList.contains("p-textfield")) // cannot directly use in query selector, because TS then gets confused about the Type of the Element
       .map((element) => {
         const descriptiveName = element.name;
-        return new InteractionElement(element, descriptiveName, () => element.value);
+        return new InteractionElement(element, descriptiveName, this.className, () => element.value);
       });
   }
 
   attachLogger(interaction_element: InteractionElement): void {
-    // TODO logging on every keystroke is somewhat excessive
+    // Fixme logging on every keystroke is somewhat excessive
     interaction_element.interactiveElement.addEventListener('input', () => {
       console.log(`${interaction_element.descriptiveName} input ${interaction_element.data!()}`);
       this.logFunction(new logData(interaction_element));

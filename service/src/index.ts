@@ -4,6 +4,7 @@ import https from "https";
 import fs from "fs";
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { userAction } from "./model/user_action";
 
 const httpsOptions = {
   key: fs.readFileSync('./privatekey.pem'),
@@ -11,18 +12,16 @@ const httpsOptions = {
 }
 
 const app = express();
-app.use(bodyParser.text());
 app.use(cors());
 
-app.post(appConfig.getRouteLog(), (req,res)=>{
-  if(req.headers.accept && req.headers.accept == 'application/json'){
-    console.log(req.body);
-    res.send();
-  }
-  else{
-    console.log('invalid data received');
-    res.status(400).send();
-  }
+app.post(appConfig.getRouteLog(), bodyParser.json(), (req,res)=>{
+  if(!req.body) res.sendStatus(400);
+  // console.log(req.body)
+
+  const data = new userAction(req.body.id, req.body.name, req.body.logType, req.body.data)
+  console.log(data)
+
+  res.sendStatus(200)
 })
 
 https.createServer(httpsOptions, app).listen(appConfig.getAppPort(),  () => {console.log(`listening on ${appConfig.getAppPort()}:${appConfig.getRouteLog()}`)});

@@ -19,6 +19,11 @@ export class InteractionElement {
   id: string;
 
   /**
+   * TODO
+   */
+  elementType: string;
+
+  /**
    * TODO 
    */
   data?: () => string;
@@ -29,9 +34,10 @@ export class InteractionElement {
    */
   stateReference?: object;
 
-  constructor(interactiveElement: HTMLElement, descriptiveName: string, data?: () => string) {
+  constructor(interactiveElement: HTMLElement, descriptiveName: string, elementType: string, data?: () => string) {
     this.interactiveElement = interactiveElement;
     this.descriptiveName = descriptiveName;
+    this.elementType = elementType;
     this.data = data;
     this.id = generateSelector(interactiveElement);
   }
