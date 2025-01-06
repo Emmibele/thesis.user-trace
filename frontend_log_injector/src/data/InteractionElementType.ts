@@ -1,9 +1,14 @@
 import { InteractionElement } from "./InteractionElement";
+import { logData } from "./LogData";
+
+type logFn = (logData: logData) => Promise<void>
 
 export abstract class InteractionElementType {
   interactionElements: InteractionElement[];
+  logFunction: logFn;
+  constructor(logFunction: logFn) {
+    this.logFunction = logFunction;
 
-  constructor() {
     this.interactionElements = this.getElements();
     this.interactionElements.forEach(element => this.attachLogger(element));
   }
@@ -70,6 +75,7 @@ export class InteractionTypeComment extends InteractionElementType {
     // TODO logging on every keystroke is somewhat excessive
     interaction_element.interactiveElement.addEventListener('input', () => {
       console.log(`${interaction_element.descriptiveName} input ${interaction_element.data!()}`);
+      this.logFunction(new logData(interaction_element));
     });
   }
 }

@@ -1,5 +1,5 @@
 //#region imports
-import { generateSelector } from "./util/css_selector";
+import { generateSelector } from "../util/css_selector";
 //#endregion
 
 /**

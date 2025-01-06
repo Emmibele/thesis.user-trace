@@ -1,9 +1,14 @@
-import { InteractionElementType, InteractionTypeButton, InteractionTypeComment } from "./InteractionElementType";
+import { InteractionElementType, InteractionTypeButton, InteractionTypeComment } from "./data/InteractionElementType";
+import { logServiceConfig } from "./config";
+import { logData } from "./data/LogData";
+import { postLog } from "./util/backend_service";
 
 function registerLoggers(){
+  const ServiceConfig = new logServiceConfig('lms10-jette', '3030', '/api/v1/receive');
+  const logFunction = (logData: logData) => postLog(logData, ServiceConfig);
   let interactionElementTypes : InteractionElementType[] = [];
-  interactionElementTypes.push(new InteractionTypeButton());
-  interactionElementTypes.push(new InteractionTypeComment());
+  interactionElementTypes.push(new InteractionTypeButton(logFunction));
+  interactionElementTypes.push(new InteractionTypeComment(logFunction));
 }
 
 
