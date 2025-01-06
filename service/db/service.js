@@ -1,3 +1,5 @@
+//TODO Typescriptify
+
 const sqlite3 = require('sqlite3').verbose();
 
 async function openDB(dbName) {
