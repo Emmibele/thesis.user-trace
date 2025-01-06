@@ -1,4 +1,5 @@
 
+//TODO Typescriptify
 module.exports = class actionLog {
   /**
    * 
