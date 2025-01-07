@@ -19,12 +19,12 @@ export class InteractionElement {
   id: string;
 
   /**
-   * TODO
+   * //TODO
    */
   elementType: string;
 
   /**
-   * TODO 
+   * //TODO 
    */
   data?: () => string;
 

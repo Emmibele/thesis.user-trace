@@ -18,7 +18,7 @@ app.post(appConfig.getRouteLog(), bodyParser.json(), (req,res)=>{
   if(!req.body) res.sendStatus(400);
   // console.log(req.body)
 
-  const data = new userAction(req.body.id, req.body.name, req.body.logType, req.body.data)
+  const data = new userAction(req.body.id, req.body.name, req.body.logType, req.body.timestamp, req.body.data)
   console.log(data)
 
   res.sendStatus(200)
