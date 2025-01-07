@@ -1,4 +1,4 @@
-export class userAction{
+export class logData{
   id : string;
   name: string;
   logType: string;
