@@ -4,9 +4,9 @@
  * @returns CSS selector for the given element
  */
 export function generateSelector(context: HTMLElement): string {
-  let index, pathSelector;
+  let pathSelector;
 
-  index = getIndex(context);
+  const index = getIndex(context);
 
   let element: HTMLElement | null = context;
 
@@ -53,7 +53,7 @@ function getClassNameString(classList: DOMTokenList): string {
  */
 function getIndex(node: HTMLElement): number {
   let i = 1;
-  let tagName = node.tagName;
+  const tagName = node.tagName;
 
   let element = node;
 

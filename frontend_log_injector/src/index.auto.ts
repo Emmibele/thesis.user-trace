@@ -6,7 +6,7 @@ import { postLog } from "./util/backend_service";
 function registerLoggers(){
   const ServiceConfig = new logServiceConfig('lms10-jette', '3030', '/api/v1/log');
   const logFunction = (logData: logData) => postLog(logData, ServiceConfig);
-  let interactionElementTypes : InteractionElementType[] = [];
+  const interactionElementTypes : InteractionElementType[] = [];
   interactionElementTypes.push(new InteractionTypeButton(logFunction));
   interactionElementTypes.push(new InteractionTypeComment(logFunction));
 }
