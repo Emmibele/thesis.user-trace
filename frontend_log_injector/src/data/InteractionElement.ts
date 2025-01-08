@@ -1,5 +1,6 @@
 //#region imports
 import { generateSelector } from "../util/css_selector";
+import { actualStateElementDoohickey } from "./stateThingies";
 //#endregion
 
 /**
@@ -40,5 +41,9 @@ export class InteractionElement {
     this.elementType = elementType;
     this.data = data;
     this.id = generateSelector(interactiveElement);
+  }
+
+  set stateNode(stateNode: actualStateElementDoohickey){
+    this.stateReference = stateNode;
   }
 }

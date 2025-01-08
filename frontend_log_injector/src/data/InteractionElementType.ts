@@ -1,5 +1,6 @@
 import { InteractionElement } from "./InteractionElement";
 import { logData } from "./LogData";
+import { actualStateElementDoohickey } from "./stateThingies";
 
 type logFn = (logData: logData) => Promise<void>
 
@@ -69,10 +70,12 @@ export class InteractionTypeButton extends InteractionElementType {
 export class InteractionTypeComment extends InteractionElementType {
   getElements(): InteractionElement[] {
     return Array.from(document.querySelectorAll("textarea"))
-      .filter((element) => element.classList.contains("p-textfield")) // cannot directly use in query selector, because TS then gets confused about the Type of the Element
+      .filter((element) => element.classList.contains("p-textfield")) // cannot directly use class in query selector, because TS then gets confused about the Type of the Element
       .map((element) => {
         const descriptiveName = element.name;
-        return new InteractionElement(element, descriptiveName, this.className, () => element.value);
+        const interactionElement = new InteractionElement(element, descriptiveName, this.className, () => element.value);
+        interactionElement.stateNode = new actualStateElementDoohickey(element);
+        return interactionElement;
       });
   }
 

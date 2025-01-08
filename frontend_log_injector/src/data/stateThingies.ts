@@ -1,4 +1,4 @@
-class actualStateElementDoohickey{
+export class actualStateElementDoohickey{
   /**
    * all elements on the page, that can contain a dialogs state
    */
@@ -9,12 +9,13 @@ class actualStateElementDoohickey{
   stateNode: Node;
 
   constructor(interactionElement: HTMLElement){
+    // TODO we probably need some kind of class hierarchy again and the function that selects stateElements should be custom (either constructor argument or specific to the class implementation) 
     if (actualStateElementDoohickey.stateElements.length == 0){
       actualStateElementDoohickey.stateElements.push(...document.querySelectorAll('.p-error-text')); 
     }
 
     this.stateNode = this.findRelatedStateElement(interactionElement);
-    console.log(this.stateNode);
+    console.log(this.stateNode, ' is state Node for', interactionElement); // TODO remove debug
 
   }
 
@@ -54,7 +55,7 @@ class actualStateElementDoohickey{
       const commonParent = this.findCommonParent(interactionElement, stateElement);
       if (deepestParent.contains(commonParent)) {
         deepestParent = commonParent;
-        relevantStateElement = commonParent;
+        relevantStateElement = stateElement;
       }
       else{
         // sanity check
