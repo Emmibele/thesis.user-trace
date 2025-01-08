@@ -3,8 +3,11 @@ export class actualStateElementDoohickey{
    * all elements on the page, that can contain a dialogs state
    */
   private static stateElements: Element[] = [];
+  
+  /**
+   * map of common ancestors from interactive elements and the nodes describing the state <ancestor, stateNode>
+   */
   private static commonParentStateMap = new Map<Node, Node>();
-
 
   stateNode: Node;
 
@@ -16,13 +19,12 @@ export class actualStateElementDoohickey{
 
     this.stateNode = this.findRelatedStateElement(interactionElement);
     console.log(this.stateNode, ' is state Node for', interactionElement); // TODO remove debug
-
   }
 
   /**
    * get the state element for a input element
-   * @param interactionElement 
-   * @returns 
+   * @param interactionElement element being interacted with, that can cause a state change
+   * @returns the element describing the state relevant to the provided interaction element
    */
   private findRelatedStateElement(interactionElement: HTMLElement){
     for(const commonParent of actualStateElementDoohickey.commonParentStateMap.keys()){
@@ -37,6 +39,7 @@ export class actualStateElementDoohickey{
     
     const commonParentResult = this.findMostSpecificCommonParent(interactionElement);
 
+    // store result in map, so we don't have to repeat the lookup
     actualStateElementDoohickey.commonParentStateMap.set(commonParentResult.deepestParent, commonParentResult.relevantStateElement)
     
     return commonParentResult.relevantStateElement;
@@ -44,13 +47,14 @@ export class actualStateElementDoohickey{
 
 /**
  * find the most specific common ancestor node between any Node and the stateElements
- * @param interactionElement 
- * @returns 
+ * @param interactionElement element being interacted with, that can cause a state change
+ * @returns object containing the most specific common parent and the state element relevant to the interactionElement
  */
   private findMostSpecificCommonParent(interactionElement: Node) {
     // Specify Node, because querySelector returns Element(subtype of Node) and Range only works with Nodes
     let deepestParent: Node = document.querySelector('html')!; // if this returns null, things are FUBAR
     let relevantStateElement: Node = actualStateElementDoohickey.stateElements[0];
+    // check against all state Elements, because they are all related, but the relevant elements should be the ones most closely related in hierarchy
     for (const stateElement of actualStateElementDoohickey.stateElements) {
       const commonParent = this.findCommonParent(interactionElement, stateElement);
       if (deepestParent.contains(commonParent)) {
@@ -69,21 +73,22 @@ export class actualStateElementDoohickey{
 
   /**
    * find the most specific common ancestor node between two nodes
-   * @param interactionElement 
-   * @param stateElement 
-   * @returns 
+   * (src: https://stackoverflow.com/a/68583466)
+   * @param NodeA first node
+   * @param NodeB second node
+   * @returns most specific common ancestor node between NodeA and NodeB
    */
- private findCommonParent(interactionElement: Node, stateElement: Node){
+ private findCommonParent(NodeA: Node, NodeB: Node){
   const range = new Range();
-  range.setStart(interactionElement, 0);
-  range.setEnd(stateElement, 0);
+  range.setStart(NodeA, 0);
+  range.setEnd(NodeB, 0);
 
+  // if elements are in inverted order, we need to swap them (A is after B in document)
   if(range.collapsed){
-    range.setStart(stateElement, 0);
-    range.setEnd(interactionElement, 0);
+    range.setStart(NodeB, 0);
+    range.setEnd(NodeA, 0);
   }
   return range.commonAncestorContainer;
-  //https://stackoverflow.com/a/68583466
  }
 }
 
