@@ -1,0 +1,61 @@
+@startuml
+abstract InteractionElementType{
+interactionElements: InteractionElement[]
+logFunction: logFn
+InteractionElementType(logFn)
+string className()
+{abstract} InteractionElement[] getElements()
+{abstract} void attachLogger(InteractionElement)
+}
+
+class InteractionTypeComment{
+InteractionElement[] getElements()
+void attachLogger(InteractionElement)
+}
+
+class InteractionTypeButton{
+InteractionElement[] getElements()
+void attachLogger(InteractionElement)
+- string getElementName(HTMLButtonElement)
+}
+
+class InteractionElement {
+interactiveElement: HTMLElement
+descriptiveName: string
+id: string
+elementType: string
+data?: () => string
+stateReference: TODO
+InteractionElement(HTMLElement, string, string, () => string)
+}
+
+note right of InteractionElement::stateReference
+  TODO: not yet implemented
+end note
+note right of InteractionElement::data?
+  TODO: darstellung nich wirklich nice
+end note
+
+
+class logFn << (T, #ff9999) Type >>{
+(logData) => Promise<void>
+}
+
+class logData{
+id: string
+name: string
+logType: string
+timestamp: number
+data?: string
+logData(InteractionElement)
+}
+
+InteractionElementType <|.. InteractionTypeComment
+InteractionElementType <|.. InteractionTypeButton
+InteractionElementType "1" *-- "n " InteractionElement : contains >
+InteractionElementType .. logFn : > uses
+logFn .. logData : sends >
+logData .. InteractionElement: created from >
+@enduml
+
+//www.plantuml.com/plantuml/png/hLF1RjGm4BtxAqRB9OkwbJXYBQ62Wa0g5A6z8GvkCibQnEELFIcgGlyTsqqsMJMHLe9SOe_VlEUPvxdoh1otfX7gphDJ1SDdOemBRUb3WmQ9Tmy7x8H-5lTo1lpZfsXi_R6b59GGDoJcIRDqk1P1MLCDHQEy_weCPclH3VTvdDM06dcunIdwtkeI5BCgzZUshj5bp_FNub68f3ObZpTwRqq4TE8CqNzJUjSoM_gFGXlespWcfrv-sdsvYMBBTvhomCJeU-o34Y99ln4b-iBfGpoF0hBN5ReyBd7q-1Wh5Qkt4h8rlCc7c6V5-1qhT4X5WEvkhszdEf9Dv2_wtF4_PKoraMK4f-izWwrcQfJoL5T04fOG4k416RGvF26n54XbZECPhAd28rcfd6TicfPg85tiuRTslvgmY3iSUGSlqYp0TWlPxW9ULDNhyAqXjX3ol1DnLgw3G2hscxD6Uzp6bv6FTlQGRce5JIqAW1DFM1lqhCn10hNc3jtWqeYFX4iFUtwgOVldyd9XiCvF6IPaAMFrQWKlDnjO4Qpcth64mX8hJHxo9OwW-THr2Jcq7hr8spuUAmyd7gcC77qa7CwP3uL3nLX25Qm9wAkGrPhcBm00

@@ -1,6 +1,8 @@
 import { logServiceConfig } from "../config";
 import { logData } from "../data/LogData";
 
+// Finger weg! -> soll nur Daten versenden und keine weiteren Aufrufe tätigen!
+
 export async function postLog(logData: logData, serviceConfig: logServiceConfig ) {
   const path = serviceConfig.getPostUrl();
   const headers = new Headers();
