@@ -1,6 +1,6 @@
 import { InteractionElement } from "./InteractionElement";
 import { logData } from "./LogData";
-import { actualStateElementDoohickey } from "./stateThingies";
+import { stateHierarchicalRelation, stateSelectableRelation } from "./stateThingies";
 
 type logFn = (logData: logData) => Promise<void>
 
@@ -30,11 +30,33 @@ export abstract class InteractionElementType {
 }
 
 export class InteractionTypeButton extends InteractionElementType {
-  //TODO: must also work with submit buttons (in this case form submit)
+  //TODO: must also work with submit buttons (in this case form submit) -> no, lets create another subtype or smthn
   getElements(): InteractionElement[] {
     return Array.from(document.querySelectorAll("button")).map((element) => {
       const descriptiveName = this.getElementName(element);
-      return new InteractionElement(element, descriptiveName, this.className);
+      const interactionElement = new InteractionElement(element, descriptiveName, this.className);
+
+      const buttonOnClick = element.onclick?.toString();
+      if(buttonOnClick?.includes('OpenDialog')){
+        const dialogToBeOpened = buttonOnClick.match(/(?<=OpenDialog\(['"])[a-zA-Z]+(?=['"])/)?.[0];
+        if(dialogToBeOpened){
+          const dialog = document.getElementById(dialogToBeOpened);
+          if (dialog){
+              try{
+                interactionElement.stateNode = new stateSelectableRelation(dialog)
+              }
+              catch{
+                console.log("gotta do something about delete dialogs")
+                // TODO delete does not have any validation and therefore no state
+              }
+            }
+        }
+      }
+
+      // const dialogToBeOpened = element.onclick?.toString()
+      // console.log("Button onclick: ", dialogToBeOpened)
+      return interactionElement;
+
     });
   }
 
@@ -74,7 +96,7 @@ export class InteractionTypeComment extends InteractionElementType {
       .map((element) => {
         const descriptiveName = element.name;
         const interactionElement = new InteractionElement(element, descriptiveName, this.className, () => element.value);
-        interactionElement.stateNode = new actualStateElementDoohickey(element);
+        interactionElement.stateNode = new stateHierarchicalRelation(element);
         return interactionElement;
       });
   }
