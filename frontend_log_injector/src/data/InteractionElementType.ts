@@ -30,7 +30,6 @@ export abstract class InteractionElementType {
 }
 
 export class InteractionTypeButton extends InteractionElementType {
-  //TODO: must also work with submit buttons (in this case form submit) -> no, lets create another subtype or smthn
   getElements(): InteractionElement[] {
     return Array.from(document.querySelectorAll("button")).map((element) => {
       const descriptiveName = this.getElementName(element);
@@ -107,5 +106,46 @@ export class InteractionTypeComment extends InteractionElementType {
       console.log(`${interaction_element.descriptiveName} input ${interaction_element.data!()}`);
       this.logFunction(new logData(interaction_element));
     });
+  }
+}
+
+export class InteractionTypeAnchor extends InteractionElementType{
+  //TODO implement InteractionTypeAnchor
+  getElements(): InteractionElement[] {
+    throw new Error("Method not implemented.");
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  attachLogger(interaction_element: InteractionElement): void {
+    throw new Error("Method not implemented.");
+  }
+}
+export class InteractionTypeSubmit extends InteractionElementType{
+  //TODO implement InteractionTypeSubmit
+  getElements(): InteractionElement[] {
+    throw new Error("Method not implemented.");
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  attachLogger(interaction_element: InteractionElement): void {
+    throw new Error("Method not implemented.");
+  }
+}
+export class InteractionTypeDateTime extends InteractionElementType{
+    //TODO implement InteractionTypeDateTime
+  getElements(): InteractionElement[] {
+    throw new Error("Method not implemented.");
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  attachLogger(interaction_element: InteractionElement): void {
+    throw new Error("Method not implemented.");
+  }
+}
+export class InteractionTypeDropDown extends InteractionElementType{
+  //TODO implement InteractionTypeDropDown
+  getElements(): InteractionElement[] {
+    throw new Error("Method not implemented.");
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  attachLogger(interaction_element: InteractionElement): void {
+    throw new Error("Method not implemented.");
   }
 }
