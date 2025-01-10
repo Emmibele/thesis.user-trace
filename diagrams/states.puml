@@ -1,0 +1,57 @@
+@startuml
+
+enum StateType{
+OK
+ERROR
+WARNING
+}
+
+abstract class LoggableState{
++ stateType: StateType
++ stateInformation : string
++ log() : promise<void>
+}
+
+note top of LoggableState:need to find out, if abstract class, type or interface the best implementation
+
+note right of LoggableState::stateInformation
+  TODO: wird vermutlich übergebbare funktion, die den zustand ermittelt
+end note
+note right of LoggableState::log
+  TODO: soll irgendwie von aussen (interaction) aufgerufen werden um den eigenen zustand zu loggen
+end note
+
+
+note as N1
+  Aktuell: ich ordne jedem interaktionselement ein eigenes state objekt zu. bei zuordnung wird die entsprechende node berechnet
+  Möglich: statt konkretes state objekt übergebe ich einem allgemeinen state Objekt eines typen das interaktionselement 
+  und berechne relevanten state nur sobald nötig (auch mit cache, ggf. iElement als param für Log)
+end note
+
+
+
+abstract class RelatedLoggableState{
+- selectorForStateNodes: string
+- collectionOfStateNodes: Node[]
+}
+note left of RelatedLoggableState: zustände die eine Beziehung zum Interatkionselement haben (dialog)
+note left of RelatedLoggableState::selectorForStateNodes
+ platzhalter, bis ich mir mechanismus daüfr oberlege
+end note
+
+
+class HierarchyRelatedLoggableState
+note left of HierarchyRelatedLoggableState: beziehung wird über proximity im html / dom tree zu einer übergebenen node fest gestellt
+
+class CustomRelatedLoggableState
+note right of CustomRelatedLoggableState: übergebenes element stellt limit dar, darunter liegt eindeutige state node
+class GeneralLoggableState
+note right of GeneralLoggableState: zustände, die über den generellen zustand der seite identifiziert werden (root, php errror, db error,...)
+
+LoggableState .left. StateType : uses >
+LoggableState <|.. RelatedLoggableState
+LoggableState <|.. GeneralLoggableState
+RelatedLoggableState <|.. HierarchyRelatedLoggableState
+RelatedLoggableState <|.. CustomRelatedLoggableState
+@enduml
+//www.plantuml.com/plantuml/png/XLLDZoCr4BtthtZ76H62kBPMgrrWMKR0H1fMue0ukEFgRc_y4Tdb6MQ0VyDlsDFSyiSeE-bD9hJ2fRlZgl9xzUhPUPDOHSxEDWtvxF0BAwOFZrlwirdzsBoxkrlTDR--lRkzkNtV_DqqgaiSrPgnjYeb_1I6GNMMIfLKV84qbRV7dQRb6z-7w1IRuD7AKZH-a9WDmzMrB6nZS2RHg_jWzEk2vGCJE6mH-fT0hIVI4a5ll4R8l83fyPBQ0YpG2176CyLUhGay4ZfA3EEsbXnvhcGEID4C8_yNgptdtW0VLj-jMZoOg75FqMMsPZrYzznH7AZhL2JqsMzAzWBQ43HvF6NPIVXAWM4cooAuHe6-Z2_wV8PCmLeO0V7wmH3kWuVAAP77LMrJhGlcjIps0yNSI-21Oa7Fhf8W8xL7Cl8k-ilQaSn13fLm-xK0lzrm9cjRb1P3r9xmaJGvx05haudsSeBC197sCqVeFjA61MU9ZeoyonRP3rMzgetKfMsazIWCI2Z8ewFosnCB_i-xJqEHjwqRCZR1RoBnES0aFbMUmeCSbBK3kVBj3ychcbp3gHh4Gwiqsuf0Pwy_Kq6KmBsIn6aldoDIw9JLyBjFR0PSgIpOpZ3MIjfPO1Zw9SoxmuxA9cnLL0xzxZcMCL-Vgdv-jkx82em-Es9VeZ1SSuZVXrZNReEcD9qdYQ-3jLHziEfF4yhhjz_bO1KyMEgBsMPHscgFtJzb7jfGbGlVq9EXKIOdGOURgXXlJXKRLLUCg8sofRN_XsbdMscmbTodKLc1MA0p2QRA6k5a5CgRv7A2LhldFY9q52qDTAhaNhyVZ32Cw_5n3li5kykfBRgfzRrfgzNATVM7SOOVOHn6TXPVGGS7ZaGYKHKj7ctfoU-ztLDY3F8WQtdY-gte7TmC-jdTS26nFSLAc8Qonu4jLA5LN9H7BjEJDHhgMT2KsGmq-LfO7cYz9qzHsGk4ZYdp_gdNtq4nJHv3IHT69rUGbb0YmmGZ6Mnw8sf7dYwkgnW2Bx0Tjw0OOoWTTA3wjLmkhvlc1JQMPQZBuxyFMkH42Q_FybxzjLpEsd8cRrw8kUAQVj5F5-eksU0DUPsT_HS0

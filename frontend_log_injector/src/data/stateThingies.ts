@@ -142,4 +142,4 @@ export class stateSelectableRelation {
   }
 
 }
-// class stateCustomRelation{}
+// class stateCustomRelation{} // probs not custom, but simply information about the page when it has loaded -> is error page -> is regualr page -> is php exception page
